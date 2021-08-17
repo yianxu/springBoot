@@ -1,2 +1,4 @@
 # Project exclude paths
 /springBoot-helloworld/target/
+.idea/
+*.iml
