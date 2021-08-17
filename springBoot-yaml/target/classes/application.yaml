@@ -1,0 +1,12 @@
+person:
+  userName: zhangsan
+  boss: false
+  birth: 2019/12/12 20:12:33
+  age: 18
+  pet:
+    name: tomcat
+    weight: 23.4
+  interests: [篮球,游泳]
+  animal:
+    - jerry
+    - mario
