@@ -7,17 +7,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="SpringBoot-mybatis" />
         <module name="springBoot-helloworld" />
         <module name="springBoot-yaml" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="springBoot-helloworld" target="1.8" />
+      <module name="SpringBoot-mybatis" target="1.8" />
       <module name="springBoot-yaml" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SpringBoot-mybatis" options="-parameters" />
       <module name="springBoot-helloworld" options="-parameters" />
       <module name="springBoot-yaml" options="-parameters" />
     </option>

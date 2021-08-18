@@ -10,3 +10,9 @@ person:
   animal:
     - jerry
     - mario
+management:
+  endpoints:
+    enabled-by-default: true #暴露所有端点信息
+    web:
+      exposure:
+        include:
