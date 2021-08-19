@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.hsf.HSFJSONUtils;
+import com.es.elsaticsearch.entity.Book;
 import com.es.elsaticsearch.entity.User;
+import com.es.elsaticsearch.repository.BookRepository;
 import com.es.elsaticsearch.service.ContentService;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -51,9 +53,27 @@ import java.util.stream.Stream;
 @SpringBootTest
 public class ElsaticsearchApplicationTests {
 
-
+    /**
+     * 方式一：ElasticsearchTemplate操作ES
+     */
     @Autowired
     private RestHighLevelClient restHighLevelClient;
+
+    /**
+     * 方式二：编写一个ElasticsearchRepository子接口来操作ES
+     */
+    @Autowired
+    private BookRepository bookRepository;
+
+
+    @Test
+    public void test02(){
+        Book book = new Book();
+        book.setId(2);
+        book.setBookName("JAVA");
+        book.setAuthor("xujian");
+        Book b = this.bookRepository.save(book);
+    }
 
     //创建索引
     @Test

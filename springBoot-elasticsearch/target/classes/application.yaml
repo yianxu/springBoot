@@ -5,3 +5,6 @@ spring:
   thymeleaf:
     cache:false
     prefix:classpath:/templates/
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
