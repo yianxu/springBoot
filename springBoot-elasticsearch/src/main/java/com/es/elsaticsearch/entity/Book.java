@@ -2,7 +2,7 @@ package com.es.elsaticsearch.entity;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "dong",indexStoreType = "book")
+@Document(indexName = "jy_book")
 public class Book {
     private Integer id;
     private String bookName;

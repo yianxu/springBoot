@@ -3,7 +3,6 @@ package com.es.elsaticsearch;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.hsf.HSFJSONUtils;
 import com.es.elsaticsearch.entity.Book;
 import com.es.elsaticsearch.entity.User;
 import com.es.elsaticsearch.repository.BookRepository;
@@ -22,7 +21,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.ElasticsearchClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -44,35 +42,42 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ElsaticsearchApplicationTests {
 
+    //日志信息输出
+    private static final Logger logger = LoggerFactory.getLogger(ElsaticsearchApplicationTests.class);
     /**
      * 方式一：ElasticsearchTemplate操作ES
      */
     @Autowired
     private RestHighLevelClient restHighLevelClient;
-
     /**
      * 方式二：编写一个ElasticsearchRepository子接口来操作ES
      */
     @Autowired
     private BookRepository bookRepository;
-
+    @Autowired
+    private ContentService contentService;
 
     @Test
-    public void test02(){
+    public void test02() {
         Book book = new Book();
-        book.setId(2);
-        book.setBookName("JAVA");
-        book.setAuthor("xujian");
-        Book b = this.bookRepository.save(book);
+        book.setId(1);
+        book.setBookName("红楼梦");
+        book.setAuthor("曹雪芹");
+        this.bookRepository.save(book);
+        List<Book> bookList = bookRepository.findByBookNameLike("游");
+        for (Book b : bookList) {
+            System.out.println(b.getBookName());
+        }
     }
 
     //创建索引
@@ -158,6 +163,7 @@ public class ElsaticsearchApplicationTests {
         System.out.println(update);
         System.out.println(update.status());
     }
+
     //删除文档
     @Test
     public void testDeleteDocument() throws IOException {
@@ -167,6 +173,7 @@ public class ElsaticsearchApplicationTests {
         DeleteResponse update = restHighLevelClient.delete(request, RequestOptions.DEFAULT);
         System.out.println(update.status());
     }
+
     //批量插入数据
     @Test
     public void testBulkRequest() throws IOException {
@@ -214,20 +221,15 @@ public class ElsaticsearchApplicationTests {
             System.out.println(hit.getSourceAsMap());
         }
     }
-    //日志信息输出
-    private static Logger logger = LoggerFactory.getLogger(ElsaticsearchApplicationTests.class);
 
     @Test
-    public void search(){
+    public void search() {
         SearchRequest searchRequest = new SearchRequest("ywb");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
         String writeableName = matchAllQueryBuilder.getWriteableName();
         logger.info(writeableName);
     }
-
-    @Autowired
-    private ContentService contentService;
 
     @Test
     public void test() throws IOException {
@@ -245,13 +247,13 @@ public class ElsaticsearchApplicationTests {
     }
 
     @Test
-    public void stream(){
+    public void stream() {
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User("张三",18));
-        users.add(new User("李四",19));
-        users.add(new User("王五",20));
-        users.add(new User("赵六",21));
-        users.add(new User("田七",22));
+        users.add(new User("张三", 18));
+        users.add(new User("李四", 19));
+        users.add(new User("王五", 20));
+        users.add(new User("赵六", 21));
+        users.add(new User("田七", 22));
 
         users.stream().filter((u) -> u.getAge() > 18).forEach(System.out::println);
         long count = users.stream().filter((u) -> u.getName().equals("张三")).count();
@@ -259,13 +261,13 @@ public class ElsaticsearchApplicationTests {
         List<Integer> collect = users.stream().map(User::getAge).collect(Collectors.toList());
         Map<String, User> collect1 = users.stream().collect(Collectors.toMap(User::getName, v -> v, (o, n) -> n));
         for (Map.Entry<String, User> stringUserEntry : collect1.entrySet()) {
-            System.out.println("key:"+stringUserEntry.getKey()+","+"value:"+stringUserEntry.getValue());
+            System.out.println("key:" + stringUserEntry.getKey() + "," + "value:" + stringUserEntry.getValue());
         }
     }
 
     @Test
-    public void testString(){
-        List<String>list1=new ArrayList<>();
+    public void testString() {
+        List<String> list1 = new ArrayList<>();
         list1.add("a");
         list1.add("b");
         list1.add("c");
@@ -273,7 +275,7 @@ public class ElsaticsearchApplicationTests {
         list1.add("e");
 
 
-        List<String>list2=new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
         list2.add("a");
         list2.add("b");
         list2.add("c");
@@ -292,12 +294,12 @@ public class ElsaticsearchApplicationTests {
     }
 
     @Test
-    public void testRemove(){
+    public void testRemove() {
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User(1,"张三",12));
-        users.add(new User(2,"李四",13));
-        users.add(new User(3,"王五",14));
-        users.add(new User(4,"赵六",15));
+        users.add(new User(1, "张三", 12));
+        users.add(new User(2, "李四", 13));
+        users.add(new User(3, "王五", 14));
+        users.add(new User(4, "赵六", 15));
         System.out.println(users);
         Object o = JSONObject.toJSON(users);
         System.out.println(o);
@@ -323,7 +325,7 @@ public class ElsaticsearchApplicationTests {
     }
 
     @Test
-    public void testObject(){
+    public void testObject() {
         boolean equals = new User(1, "张三", 12).equals(new User(1, "张三", 12));
         System.out.println(equals);
     }
