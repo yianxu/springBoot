@@ -1,0 +1,10 @@
+spring:
+  thymeleaf:
+    mode: HtML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+    prefix:classpath: /templates
+user:
+  loginName: xujian
+  passWord: 123456

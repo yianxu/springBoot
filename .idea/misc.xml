@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/springBoot-yaml/pom.xml" />
         <option value="$PROJECT_DIR$/SpringBoot-mybatis/pom.xml" />
         <option value="$PROJECT_DIR$/springBoot-elasticsearch/pom.xml" />
+        <option value="$PROJECT_DIR$/springBoot-thymeLeaf/pom.xml" />
       </list>
     </option>
   </component>

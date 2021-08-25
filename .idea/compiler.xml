@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SpringBoot-mybatis" />
+        <module name="springBoot-thymeLeaf" />
         <module name="springBoot-helloworld" />
         <module name="springBoot-yaml" />
         <module name="springBoot-elasticsearch" />
@@ -17,6 +18,7 @@
       <module name="springBoot-elasticsearch" target="1.8" />
       <module name="springBoot-helloworld" target="1.8" />
       <module name="SpringBoot-mybatis" target="1.8" />
+      <module name="springBoot-thymeLeaf" target="1.8" />
       <module name="springBoot-yaml" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -25,6 +27,7 @@
       <module name="SpringBoot-mybatis" options="-parameters" />
       <module name="springBoot-elasticsearch" options="-parameters" />
       <module name="springBoot-helloworld" options="-parameters" />
+      <module name="springBoot-thymeLeaf" options="-parameters" />
       <module name="springBoot-yaml" options="-parameters" />
     </option>
   </component>
